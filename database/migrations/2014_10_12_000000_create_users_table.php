@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('description', 300)->nullable()->comment('個下簡介');
+            $table->string('description', 300)->nullable()->comment('個人簡介');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
