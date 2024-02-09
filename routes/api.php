@@ -20,7 +20,10 @@ use App\Http\Controllers\Api\Auth\AuthController;
 // 註冊、登入、登出路由
 Route::prefix('v1')->group(function () {
     Route::prefix('auth')->group(function () {
+        // 註冊
         Route::post('/register', [AuthController::class, 'register']);
+        // 登入
+        Route::post('/login', [AuthController::class, 'login']);
     });
 
 });

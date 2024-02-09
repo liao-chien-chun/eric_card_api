@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -62,6 +64,36 @@ class AuthController extends Controller
     // 登入
     public function login(Request $request)
     {
+        // 驗證登入資料
+        $credentials = $request->only('email', 'password');
 
+        // 嘗試驗證並創建 token 
+        try {
+            if (!$token = JWTAuth::attempt($credentials)) {
+                return response()->json([
+                    'success' => false,
+                    'status' => 400,
+                    'message' => '電子郵件或密碼錯誤',
+                ], 400);
+            }   
+        } catch (JWTException $e) {
+            // 創建 token 遇到異常
+            return response()->json([
+                'success' => false,
+                'status' => 500,
+                'message' => '無法建立token',
+            ], 500);
+        }
+
+        // 成功登入，回傳 token和使用者資訊
+        return response()->json([
+            'success' => true,
+            'status' => 200,
+            'message' => '登入成功',
+            'data' => [
+                'token' => $token,
+                'user' => \Auth::user()->only(['id', 'name', 'email'])// 取得當前已認證之使用者資訊 
+            ]
+        ], 200); 
     }
 }
