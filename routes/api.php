@@ -34,9 +34,12 @@ Route::prefix('v1')->group(function () {
         Route::post('/posts', [PostController::class, 'store']);
 
     });
-
+    
     // 公開路由
-
+    Route::prefix('posts')->group(function () {
+        Route::get('/', [PostController::class, 'index']);
+        Route::get('/{post_id}', [PostController::class, 'show']);
+    });
 });
 
 

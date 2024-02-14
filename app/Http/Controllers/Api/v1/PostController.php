@@ -11,6 +11,25 @@ use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
+    // 展示所有文章，不用登入即可看到
+    public function index()
+    {
+        $posts = Post::all();
+
+        return response()->json([
+            'success' => true,
+            'status' => 201,
+            'message' => '取得所有文章成功',
+            'data' => $posts
+        ], 201);
+    }
+
+    // 取得單一文章內容
+    public function show($post_id)
+    {
+        
+    }
+
     // 發布文章，已登入者才可發文
     public function store(Request $request)
     {
