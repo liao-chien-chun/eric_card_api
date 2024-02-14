@@ -12,6 +12,12 @@ class Comment extends Model
 
     protected $table = 'comments';
 
+    protected $fillable = [
+        'content',
+        'user_id',
+        'post_id'
+    ];
+
     // 自訂義時間
     protected function serializeDate(DateTimeInterface $date)
     {

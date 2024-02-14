@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\v1\PostController;
 use App\Http\Controllers\Api\v1\CategoryController;
+use App\Http\Controllers\Api\v1\CommentController;
 
 
 /*
@@ -32,6 +33,9 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:api')->group(function () {
         // 已登錄者才能發布文章
         Route::post('/posts', [PostController::class, 'store']);
+
+        // 特定文章下留言
+        Route::post('/posts/{post_id}/comments', [CommentController::class, 'store']);
 
     });
 
