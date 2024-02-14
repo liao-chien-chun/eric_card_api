@@ -48,7 +48,9 @@ class PostController extends Controller
     // 展示所有文章，不用登入即可看到
     public function index()
     {
-        $posts = Post::with(['user', 'category'])->get();
+        $posts = Post::with(['user', 'category'])
+                        ->withCount('comments')
+                        ->get();
 
         // 排除資料
         $posts->each(function ($post) {

@@ -43,6 +43,8 @@ Route::prefix('v1')->group(function () {
     Route::prefix('posts')->group(function () {
         Route::get('/', [PostController::class, 'index']);
         Route::get('/{post_id}', [PostController::class, 'show']);
+          // 取得文章之留言
+        Route::get('/{post_id}/comments', [CommentController::class, 'index']);
     });
 
     // 取得所有分類

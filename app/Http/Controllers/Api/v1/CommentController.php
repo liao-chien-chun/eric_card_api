@@ -13,6 +13,28 @@ use Illuminate\Support\Facades\Validator;
 
 class CommentController extends Controller
 {
+    // 取得文章留言
+    public function index($post_id)
+    {
+        $comments = Comment::with('user')
+                            ->where('post_id', $post_id)
+                            ->get();
+
+        // 排除
+        $comments->each(function ($comment) {
+            if ($comment->user) {
+                $comment->user->makeHidden(['description', 'email_verified_at', 'created_at', 'updated_at']);
+            }
+        });
+
+        return response()->json([
+            'success' => true,
+            'status' => 200,
+            'message' => '取得文章留言成功',
+            'data' => $comments
+        ], 200);
+    }
+
     // 新增留言
     public function store(Request $request, $post_id)
     {

@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-
+use DateTimeInterface;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -47,6 +47,12 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'remember_token',
     ];
+
+    // 自訂義時間
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s'); // 自定義時間格式
+    }
 
     // JWT 相關
     public function getJWTIdentifier()
