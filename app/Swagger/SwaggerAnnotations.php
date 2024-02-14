@@ -5,11 +5,11 @@ namespace App\Swagger;
 /**
  * @OA\OpenApi(
  *   @OA\Info(
- *     title="您的 API 標題",
+ *     title="eric_card_api",
  *     version="1.0.0",
- *     description="這是 API 的簡介",
+ *     description="以Dcard 為模板建立出來的 API",
  *     @OA\Contact(
- *       name="API 支援團隊",
+ *       name="eric",
  *       url="http://www.example.com/support",
  *       email="support@example.com"
  *     )

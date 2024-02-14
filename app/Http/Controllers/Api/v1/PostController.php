@@ -59,48 +59,100 @@ class PostController extends Controller
 
         return response()->json([
             'success' => true,
-            'status' => 201,
+            'status' => 200,
             'message' => '取得所有文章成功',
             'data' => $posts
-        ], 201);
+        ], 200);
     }
 
-    /**
-     * @OA\Get(
-     *     path="/api/v1/posts/{post_id}",
-     *     summary="取得單一文章內容",
-     *     tags={"Posts"},
-     *     @OA\Parameter(
-     *         name="post_id",
-     *         in="path",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="integer"
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="操作成功",
-     *         @OA\JsonContent(ref="#/components/schemas/Post")
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="文章未找到"
-     *     )
-     * )
-     */
-
+/**
+ * @OA\Get(
+ *     path="/api/v1/posts/{post_id}",
+ *     summary="取得單一文章內容",
+ *     tags={"Posts"},
+ *     @OA\Parameter(
+ *         name="post_id",
+ *         in="path",
+ *         required=true,
+ *         @OA\Schema(
+ *             type="integer"
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="操作成功",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(
+ *                 property="success",
+ *                 type="boolean",
+ *                 example=true
+ *             ),
+ *             @OA\Property(
+ *                 property="status",
+ *                 type="integer",
+ *                 example=200
+ *             ),
+ *             @OA\Property(
+ *                 property="message",
+ *                 type="string",
+ *                 example="取得文章成功"
+ *             ),
+ *             @OA\Property(
+ *                 property="data",
+ *                 ref="#/components/schemas/Post"
+ *             )
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="文章未找到",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(
+ *                 property="success",
+ *                 type="boolean",
+ *                 example=false
+ *             ),
+ *             @OA\Property(
+ *                 property="status",
+ *                 type="integer",
+ *                 example=404
+ *             ),
+ *             @OA\Property(
+ *                 property="message",
+ *                 type="string",
+ *                 example="找不到此文章"
+ *             )
+ *         )
+ *     )
+ * )
+ */
     // 取得單一文章內容
     public function show($post_id)
     {
         $post = Post::with('user')->find($post_id);
+
+        // 如果不存在
+        if (!$post) {
+            return response()->json([
+                'success' => false,
+                'status' => 404,
+                'message' => '找不到此文章',
+            ], 404);
+        }
 
         // 排除資料
         if ($post->user) {
             $post->user->makeHidden(['description', 'email_verified_at', 'created_at', 'updated_at']);
         }
 
-        return response()->json($post);
+        return response()->json([
+            'success' => true,
+            'status' => 200,
+            'message' => '取得文章成功',
+            'data' => $post
+        ], 200);
     }
 
 
