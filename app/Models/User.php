@@ -15,6 +15,18 @@ class User extends Authenticatable implements JWTSubject
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
+     * @OA\Schema(
+     *   schema="User",
+     *   type="object",
+     *   title="User",
+     *   @OA\Property(property="id", type="integer", format="int64", description="User ID"),
+     *   @OA\Property(property="name", type="string", description="User name"),
+     *   @OA\Property(property="email", type="string", description="User email"),
+     *   // 省略了其他屬性...
+     * )
+     */
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>

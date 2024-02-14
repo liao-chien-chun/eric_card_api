@@ -10,6 +10,19 @@ class Post extends Model
 {
     use HasFactory;
 
+    /**
+     * @OA\Schema(
+     *   schema="Post",
+     *   type="object",
+     *   title="Post",
+     *   required={"title", "content"},
+     *   @OA\Property(property="id", type="integer", format="int64", description="Post ID"),
+     *   @OA\Property(property="title", type="string", description="Post title"),
+     *   @OA\Property(property="content", type="string", description="Post content"),
+     *   @OA\Property(property="user_id", type="integer", description="User ID"),
+     * )
+     */
+
     protected $table = 'posts';
 
     protected $fillable = [

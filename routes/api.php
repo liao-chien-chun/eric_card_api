@@ -17,7 +17,6 @@ use App\Http\Controllers\Api\v1\PostController;
 |
 */
 
-
 // 註冊、登入、登出路由
 Route::prefix('v1')->group(function () {
     // Auth 相關路由

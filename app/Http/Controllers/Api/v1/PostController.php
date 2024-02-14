@@ -11,6 +11,40 @@ use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
+    /**
+     * @OA\Get(
+     *     path="/api/v1/posts",
+     *     summary="展示所有文章",
+     *     tags={"Posts"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="操作成功",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="success",
+     *                 type="boolean",
+     *                 example=true
+     *             ),
+     *             @OA\Property(
+     *                 property="status",
+     *                 type="integer",
+     *                 example=201
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="取得所有文章成功"
+     *             ),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(ref="#/components/schemas/Post")
+     *             ),
+     *         )
+     *     )
+     * )
+     */
     // 展示所有文章，不用登入即可看到
     public function index()
     {
@@ -31,6 +65,31 @@ class PostController extends Controller
         ], 201);
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/v1/posts/{post_id}",
+     *     summary="取得單一文章內容",
+     *     tags={"Posts"},
+     *     @OA\Parameter(
+     *         name="post_id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="操作成功",
+     *         @OA\JsonContent(ref="#/components/schemas/Post")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="文章未找到"
+     *     )
+     * )
+     */
+
     // 取得單一文章內容
     public function show($post_id)
     {
@@ -43,6 +102,36 @@ class PostController extends Controller
 
         return response()->json($post);
     }
+
+
+/**
+ * @OA\Post(
+ *     path="/api/v1/posts",
+ *     summary="發布文章",
+ *     tags={"Posts"},
+ *     @OA\RequestBody(
+ *         @OA\JsonContent(
+ *             required={"title","content"},
+ *             @OA\Property(property="title", type="string", example="範例標題"),
+ *             @OA\Property(property="content", type="string", example="這是文章內容")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=201,
+ *         description="文章發布成功",
+ *         @OA\JsonContent(ref="#/components/schemas/Post")
+ *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="請求參數錯誤"
+ *     ),
+ *     @OA\Response(
+ *         response=500,
+ *         description="伺服器錯誤，請稍後再試"
+ *     ),
+ *     security={{ "apiAuth": {} }}
+ * )
+ */
 
     // 發布文章，已登入者才可發文
     public function store(Request $request)
