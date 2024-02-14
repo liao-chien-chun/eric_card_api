@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title', 255)->comment('標題');
             $table->longText('content')->comment('內文');
             $table->bigInteger('user_id')->comment('發文者');
+            $table->bigInteger('category_id')->comment('屬於哪個看版');
             $table->timestamps();
         });
     }
