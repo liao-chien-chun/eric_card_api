@@ -48,7 +48,7 @@ class PostController extends Controller
     // 展示所有文章，不用登入即可看到
     public function index()
     {
-        $posts = Post::with('user')->get();
+        $posts = Post::with(['user', 'category'])->get();
 
         // 排除資料
         $posts->each(function ($post) {
@@ -131,7 +131,7 @@ class PostController extends Controller
     // 取得單一文章內容
     public function show($post_id)
     {
-        $post = Post::with('user')->find($post_id);
+        $post = Post::with(['user', 'category'])->find($post_id);
 
         // 如果不存在
         if (!$post) {
@@ -190,11 +190,13 @@ class PostController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:100',
-            'content' => 'required'
+            'content' => 'required',
+            'category_id' => 'required'
         ], [
             'title.required' => '標題為必填',
             'title.max' => '標題最長為100個字',
-            'content.required' => '文章內容為必填'
+            'content.required' => '文章內容為必填',
+            'category_id.required' => '必須得選擇一個文章分類'
         ]);
 
         // 如果有錯誤
@@ -213,7 +215,8 @@ class PostController extends Controller
             $post = Post::create([
                 'title' => $request->title,
                 'content' => $request->content,
-                'user_id' => $user_id
+                'user_id' => $user_id,
+                'category_id' => $request->category_id
             ]);
 
             return response()->json([

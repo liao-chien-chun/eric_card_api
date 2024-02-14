@@ -28,7 +28,8 @@ class Post extends Model
     protected $fillable = [
         'title',
         'content',
-        'user_id'
+        'user_id',
+        'category_id'
     ];
 
     protected function serializeDate(DateTimeInterface $date)
