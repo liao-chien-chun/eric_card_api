@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\v1\PostController;
+use App\Http\Controllers\Api\v1\CategoryController;
 
 
 /*
@@ -39,6 +40,9 @@ Route::prefix('v1')->group(function () {
         Route::get('/', [PostController::class, 'index']);
         Route::get('/{post_id}', [PostController::class, 'show']);
     });
+
+    // 取得所有分類
+    Route::get('/categories', [CategoryController::class, 'index']);
 });
 
 
