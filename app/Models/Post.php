@@ -26,6 +26,6 @@ class Post extends Model
     // 關聯使用者
     public function user()
     {
-        return $this->belongsTo(User::class, 'id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

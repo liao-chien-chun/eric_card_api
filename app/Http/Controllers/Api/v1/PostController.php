@@ -14,7 +14,14 @@ class PostController extends Controller
     // 展示所有文章，不用登入即可看到
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::with('user')->get();
+
+        // 排除資料
+        $posts->each(function ($post) {
+            if ($post->user) {
+                $post->user->makeHidden(['description', 'email_verified_at', 'created_at', 'updated_at']);
+            }
+        });
 
         return response()->json([
             'success' => true,
@@ -27,7 +34,14 @@ class PostController extends Controller
     // 取得單一文章內容
     public function show($post_id)
     {
-        
+        $post = Post::with('user')->find($post_id);
+
+        // 排除資料
+        if ($post->user) {
+            $post->user->makeHidden(['description', 'email_verified_at', 'created_at', 'updated_at']);
+        }
+
+        return response()->json($post);
     }
 
     // 發布文章，已登入者才可發文
