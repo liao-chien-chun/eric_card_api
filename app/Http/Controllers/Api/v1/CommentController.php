@@ -133,4 +133,35 @@ class CommentController extends Controller
     }
 
     // 刪除留言
+    public function destroy($post_id, $comment_id)
+    {
+        // 尋找該留言
+        $comment = Comment::find($comment_id);
+
+        if (!$comment) {
+            return response()->json([
+                'success' => false,
+                'status' => 404,
+                'message' => '該留言不存在'
+            ], 404);
+        }
+
+        // 檢查是否為當前登入者之留言
+        if ($comment->user_id != auth()->user()->id) {
+            return response()->json([
+                'success' => false,
+                'status' => 403,
+                'message' => '不得刪除他人留言'
+            ], 403);
+        }
+
+        // 刪除留言
+        $comment->delete();
+
+        return response()->json([
+            'success' => true,
+            'status' => 200,
+            'message' => '刪除留言成功',
+        ], 200);
+    }
 }

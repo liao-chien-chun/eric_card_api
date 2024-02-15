@@ -41,6 +41,8 @@ Route::prefix('v1')->group(function () {
         Route::post('/posts/{post_id}/comments', [CommentController::class, 'store']);
         // 修改留言
         Route::patch('/posts/{post_id}/comments/{comment_id}', [CommentController::class, 'update']);
+        // 刪除留言
+        Route::delete('/posts/{post_id}/comments/{comment_id}', [CommentController::class, 'destroy']);
 
     });
 
