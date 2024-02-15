@@ -53,10 +53,24 @@ class PostController extends Controller
                         ->withCount('likers')
                         ->get();
 
+        $response = [
+            'success' => true,
+            'status' => 200,
+            'message' => '取得文章成功',
+            'data' => $posts
+        ];
+
         // 排除資料
         $posts->each(function ($post) {
             if ($post->user) {
                 $post->user->makeHidden(['description', 'email_verified_at', 'created_at', 'updated_at']);
+            }
+
+            if (auth('api')->check()) {
+                $user = auth('api')->user();
+                // 檢查當前用戶是否收藏過該文章
+                $isCollected = $post->collectors()->where('user_id',  $user->id)->exists();
+                $post->isCollected = $isCollected;
             }
         });
 
