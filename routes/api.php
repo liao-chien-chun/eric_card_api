@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\v1\PostController;
 use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\CommentController;
 use App\Http\Controllers\Api\v1\CollectionController;
-
+use App\Http\Controllers\Api\v1\LikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +49,8 @@ Route::prefix('v1')->group(function () {
         // 收藏/取消收藏文章
         Route::post('/posts/{post_id}/toggle-collection', [CollectionController::class, 'toggleCollection']);
 
+        // 按下/取消 愛心
+        Route::post('/posts/{post_id}/toggle-like', [LikeController::class, 'toggleLike']);
 
     });
 

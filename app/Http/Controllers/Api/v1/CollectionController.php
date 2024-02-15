@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class CollectionController extends Controller
 {
     // 收藏/取消收藏
-    public function toggleCollection(Request $request, $post_id)
+    public function toggleCollection($post_id)
     {
         $user = auth()->user();
 
