@@ -50,6 +50,7 @@ class PostController extends Controller
     {
         $posts = Post::with(['user', 'category'])
                         ->withCount('comments')
+                        ->withCount('likers')
                         ->get();
 
         // 排除資料
@@ -133,7 +134,10 @@ class PostController extends Controller
     // 取得單一文章內容
     public function show($post_id)
     {
-        $post = Post::with(['user', 'category'])->find($post_id);
+        $post = Post::with(['user', 'category'])
+                    ->withCount('comments')
+                    ->withCount('likers')                
+                    ->find($post_id);
 
         // 如果不存在
         if (!$post) {
