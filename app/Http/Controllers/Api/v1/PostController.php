@@ -132,7 +132,7 @@ class PostController extends Controller
  * )
  */
     // 取得單一文章內容
-    public function show($post_id)
+    public function show(Request $request, $post_id)
     {
         $post = Post::with(['user', 'category'])
                     ->withCount('comments')
@@ -153,12 +153,30 @@ class PostController extends Controller
             $post->user->makeHidden(['description', 'email_verified_at', 'created_at', 'updated_at']);
         }
 
-        return response()->json([
+        $response = [
             'success' => true,
             'status' => 200,
             'message' => '取得文章成功',
             'data' => $post
-        ], 200);
+        ];
+
+        // 如果為已經登入之用戶
+        // 路由沒放 middleware 時 就只能使用這個驗證
+        // auth('api')->check()
+        if (auth('api')->check()) {
+            $user = auth('api')->user();
+
+            // 檢查該用戶是否對此文章點過愛心
+            $isLiked = $post->likers()->where('user_id', $user->id)->exists();
+
+            // 檢查當前用戶是否收藏過該文章
+            $isCollected = $post->collectors()->where('user_id',  $user->id)->exists();
+
+            $response['data']['isLiked'] = $isLiked;
+            $response['data']['isCollected'] = $isCollected;
+        }
+
+        return response()->json($response, 200);
     }
 
 

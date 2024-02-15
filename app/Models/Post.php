@@ -55,6 +55,12 @@ class Post extends Model
         return $this->hasMany(Comment::class, 'post_id', 'id');
     }
 
+    // 關聯收藏
+    public function collectors()
+    {
+        return $this->belongsToMany(User::class, 'collections', 'post_id', 'user_id')->withTimestamps();
+    }
+
     // 文章關聯按愛心
     public function likers()
     {
