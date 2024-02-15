@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\v1\PostController;
 use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\CommentController;
+use App\Http\Controllers\Api\v1\CollectionController;
 
 
 /*
@@ -37,12 +38,17 @@ Route::prefix('v1')->group(function () {
         // 已登錄者才能發布文章
         Route::post('/posts', [PostController::class, 'store']);
 
+
         // 特定文章下留言
         Route::post('/posts/{post_id}/comments', [CommentController::class, 'store']);
         // 修改留言
         Route::patch('/posts/{post_id}/comments/{comment_id}', [CommentController::class, 'update']);
         // 刪除留言
         Route::delete('/posts/{post_id}/comments/{comment_id}', [CommentController::class, 'destroy']);
+
+        // 收藏/取消收藏文章
+        Route::post('/posts/{post_id}/toggle-collection', [CollectionController::class, 'toggleCollection']);
+
 
     });
 
