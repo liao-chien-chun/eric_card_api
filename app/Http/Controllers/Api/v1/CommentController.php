@@ -79,4 +79,58 @@ class CommentController extends Controller
             ], 500);
         }
     }
+
+    // 修改留言
+    public function update(Request $request, $post_id, $comment_id)
+    {
+        $validator = Validator::make($request->all(), [
+            'content' => 'required'
+        ], [
+            'content.required' => '留言內容不得為空'
+        ]);
+
+        // 如果驗證錯誤
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'status' => 400,
+                'message' => '請求參數錯誤',
+                'errors' => $validator->errors()
+            ], 400);
+        }
+
+        // 尋找該留言
+        $comment = Comment::find($comment_id);
+        // 判斷留言是否存在
+        if (!$comment) {
+            return response()->json([
+                'success' => false,
+                'status' => 404,
+                'message' => '該留言不存在'
+            ], 404);
+        }
+
+        // 檢查留言是否為當前登入使用者之留言
+        if ($comment->user_id != auth()->user()->id) {
+            return response()->json([
+                'success' => false,
+                'status' => 403,
+                'message' => '沒有修改他人留言之權限'
+            ], 403);
+        }
+
+        // 更新留言內容
+        $comment->update([
+            'content' => $request->content
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'status' => 200,
+            'message' => '更新留言成功',
+            'data' => $comment,
+        ], 200);
+    }
+
+    // 刪除留言
 }

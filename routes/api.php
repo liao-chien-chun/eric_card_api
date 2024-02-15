@@ -39,6 +39,8 @@ Route::prefix('v1')->group(function () {
 
         // 特定文章下留言
         Route::post('/posts/{post_id}/comments', [CommentController::class, 'store']);
+        // 修改留言
+        Route::patch('/posts/{post_id}/comments/{comment_id}', [CommentController::class, 'update']);
 
     });
 
