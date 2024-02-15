@@ -85,4 +85,10 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Comment::class, 'user_id', 'id');
     }
+
+    // 關聯使用者收藏文章
+    public function collectedPosts()
+    {
+        return $this->belongsToMany(Post::class, 'collections', 'user_id', 'post_id')->withTimestamps();
+    }
 }
