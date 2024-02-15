@@ -96,4 +96,25 @@ class AuthController extends Controller
             ]
         ], 200); 
     }
+
+    // 登出
+    public function logout(Request $request)
+    {
+        try {
+            // 使 token 失效
+            JWTAuth::invalidate(JWTAuth::getToken());
+
+            return response()->json([
+                'success' => true,
+                'status' => 200,
+                'message' => '成功登出'
+            ], 200);
+        } catch (JWTException $e) {
+            return response()->json([
+                'success' => false,
+                'status' => 500,
+                'message' => '登出時發生錯誤'
+            ], 500);
+        }
+    }
 }

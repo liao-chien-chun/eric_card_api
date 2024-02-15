@@ -31,6 +31,9 @@ Route::prefix('v1')->group(function () {
 
     // 需要經過驗證的路由
     Route::middleware('auth:api')->group(function () {
+        // 登出
+        Route::post('/auth/logout', [AuthController::class, 'logout']);
+
         // 已登錄者才能發布文章
         Route::post('/posts', [PostController::class, 'store']);
 
