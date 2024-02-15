@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\CommentController;
 use App\Http\Controllers\Api\v1\CollectionController;
 use App\Http\Controllers\Api\v1\LikeController;
+use App\Http\Controllers\Api\v1\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +53,9 @@ Route::prefix('v1')->group(function () {
 
         // 按下/取消 愛心
         Route::post('/posts/{post_id}/toggle-like', [LikeController::class, 'toggleLike']);
+
+        // 取得使用者收藏之文章
+        Route::get('/user/collected-posts', [UserController::class, 'collectedPosts']);
 
     });
 
