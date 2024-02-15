@@ -91,4 +91,10 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsToMany(Post::class, 'collections', 'user_id', 'post_id')->withTimestamps();
     }
+
+    // 關聯喜歡之文章
+    public function likedPosts()
+    {
+        return $this->belongsToMany(Post::class, 'likes', 'user_id', 'post_id')->withTimestamps();
+    }
 }

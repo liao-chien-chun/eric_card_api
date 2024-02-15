@@ -54,4 +54,11 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class, 'post_id', 'id');
     }
+
+    // 文章關聯按愛心
+    public function likers()
+    {
+        return $this->belongsToMany(User::class, 'likes', 'post_id', 'user_id')->withTimestamps();
+    }
+
 }
