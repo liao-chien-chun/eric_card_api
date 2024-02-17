@@ -12,6 +12,46 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
+    /**
+ * @OA\Post(
+ *     path="/api/v1/auth/register",
+ *     summary="註冊新使用者",
+ *     tags={"Auth"},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         description="Pass user credentials",
+ *         @OA\JsonContent(
+ *             required={"name","email","password","password_confirmation"},
+ *             @OA\Property(property="name", type="string", example="user"),
+ *             @OA\Property(property="email", type="string", format="email", example="user@example.com"),
+ *             @OA\Property(property="password", type="string", format="password", example="Password123"),
+ *             @OA\Property(property="password_confirmation", type="string", format="password", example="Password123"),
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=201,
+ *         description="註冊成功",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="success", type="boolean", example=true),
+ *             @OA\Property(property="status", type="integer", example=201),
+ *             @OA\Property(property="message", type="string", example="使用者註冊成功"),
+ *             @OA\Property(property="data", type="array",
+ *                 @OA\Items(ref="#/components/schemas/User")
+ *             )
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="Bad Request",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="success", type="boolean", example=false),
+ *             @OA\Property(property="status", type="integer", example=400),
+ *             @OA\Property(property="message", type="string", example="請求參數錯誤"),
+ *             @OA\Property(property="errors", type="object")
+ *         )
+ *     )
+ * )
+ */
     //  註冊
     public function register(Request $request)
     {
@@ -61,6 +101,30 @@ class AuthController extends Controller
         ], 201);
     }
 
+/**
+ * @OA\Post(
+ *     path="/api/auth/login",
+ *     summary="User Login",
+ *     tags={"Auth"},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             required={"email","password"},
+ *             @OA\Property(property="email", type="string", format="email", example="user@example.com"),
+ *             @OA\Property(property="password", type="string", format="password", example="Password123")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="User logged in successfully"
+ *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="Invalid credentials"
+ *     )
+ * )
+ */
+
     // 登入
     public function login(Request $request)
     {
@@ -96,6 +160,23 @@ class AuthController extends Controller
             ]
         ], 200); 
     }
+
+/**
+ * @OA\Post(
+ *     path="/api/auth/logout",
+ *     summary="User Logout",
+ *     tags={"Auth"},
+ *     security={{"bearerAuth":{}}},
+ *     @OA\Response(
+ *         response=200,
+ *         description="User logged out successfully"
+ *     ),
+ *     @OA\Response(
+ *         response=500,
+ *         description="Error logging out"
+ *     )
+ * )
+ */
 
     // 登出
     public function logout(Request $request)

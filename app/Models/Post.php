@@ -19,7 +19,7 @@ class Post extends Model
      *   @OA\Property(property="id", type="integer", format="int64", description="Post ID"),
      *   @OA\Property(property="title", type="string", description="Post title"),
      *   @OA\Property(property="content", type="string", description="Post content"),
-     *   @OA\Property(property="user_id", type="integer", description="User ID"),
+     *   @OA\Property(property="user_id", type="integer", description="關聯之user_id"),
      * )
      */
 

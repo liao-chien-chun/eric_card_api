@@ -16,7 +16,7 @@ namespace App\Swagger;
  *   ),
  *   @OA\Server(
  *     description="主要服務器",
- *     url="http://localhost:8000/api"
+ *     url="http://localhost:8000"
  *   )
  * )
  */

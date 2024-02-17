@@ -10,6 +10,39 @@ class Category extends Model
 {
     use HasFactory;
 
+    /**
+     * @OA\Schema(
+     *      schema="Category",
+     *      type="object",
+     *      title="Category",
+     *      description="類別 model",
+     *      @OA\Property(
+    *           property="id",
+    *           type="integer",
+    *           format="int64",
+    *           description="Category ID"
+    *       ),
+    *       @OA\Property(
+    *           property="category_name",
+    *           type="string",
+    *           description="Category name"
+    *       ),
+    *       @OA\Property(
+    *           property="created_at",
+    *           type="string",
+    *           format="date-time",
+    *           description="Creation date"
+    *       ),
+    *       @OA\Property(
+    *           property="updated_at",
+    *           type="string",
+    *           format="date-time",
+    *           description="Last update date"
+    *       )
+     * )
+     * 
+     */
+
     protected $table = 'categories';
 
     protected $fillable = [
