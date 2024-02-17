@@ -64,6 +64,8 @@ php artisan serve
 
 完成之後就能透過 `localhost:8000/api/v1` 去呼叫 api 了
 
+### 伺服器 run 起來之後也能透過 url 輸入 http://localhost:8000/api/documentation 進入 Swagger 實際操作API 查看內容
+
 ## API 文件
 
 ### User (使用者) API
