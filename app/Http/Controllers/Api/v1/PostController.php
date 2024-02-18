@@ -199,6 +199,7 @@ class PostController extends Controller
  *     path="/api/v1/posts",
  *     summary="發布文章",
  *     tags={"Posts"},
+ *     security={{"bearerAuth":{}}},
  *     @OA\RequestBody(
  *         @OA\JsonContent(
  *             required={"title","content"},

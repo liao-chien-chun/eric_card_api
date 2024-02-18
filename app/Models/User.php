@@ -16,21 +16,21 @@ use DateTimeInterface;
  *     schema="User",
  *     type="object",
  *     title="User",
- *     description="User model",
+ *     description="使用者",
  *     @OA\Property(
  *         property="id",
  *         type="integer",
- *         description="User ID"
+ *         description="使用者 ID"
  *     ),
  *     @OA\Property(
  *         property="name",
  *         type="string",
- *         description="User's name"
+ *         description="使用者名稱"
  *     ),
  *     @OA\Property(
  *         property="email",
  *         type="string",
- *         description="User's email address"
+ *         description="使用者電子郵件"
  *     ),
  * )
  */

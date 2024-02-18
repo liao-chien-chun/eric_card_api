@@ -40,6 +40,7 @@ return [
                 */
                 'annotations' => [
                     base_path('app'),
+                    base_path('app/Swagger'), // 確保這個路徑是正確的
                 ],
 
             ],

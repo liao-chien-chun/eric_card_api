@@ -10,6 +10,50 @@ class Comment extends Model
 {
     use HasFactory;
 
+    /**
+     * @OA\Schema(
+     *      schema="Comment",
+     *      type="object",
+     *      title="Comment",
+     *       description="文章留言",
+     *      @OA\Property(
+     *          property="id",
+     *          type="integer",
+     *          format="int64",
+     *          description="Comment ID"
+     *      ),
+     *      @OA\Property(
+     *          property="content",
+     *          type="string",
+     *          description="留言內容"
+     *      ),
+     *      @OA\Property(
+     *          property="user_id",
+     *          type="integer",
+     *          format="int64",
+     *          description="留言者的 ID"
+     *      ),
+     *      @OA\Property(
+     *          property="post_id",
+     *          type="integer",
+     *          format="int64",
+     *          description="該留言屬於的文章 ID"
+     *      ),
+     *      @OA\Property(
+     *          property="created_at",
+     *          type="string",
+     *          format="date-time",
+     *          description="建立時間"
+     *      ),
+     *      @OA\Property(
+     *          property="updated_at",
+     *          type="string",
+     *          format="data-time",
+     *          description="最後修改時間"
+     *      ),
+     * )    
+     */
+
     protected $table = 'comments';
 
     protected $fillable = [

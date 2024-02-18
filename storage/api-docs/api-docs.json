@@ -123,13 +123,13 @@
                 }
             }
         },
-        "/api/auth/login": {
+        "/api/v1/auth/login": {
             "post": {
                 "tags": [
                     "Auth"
                 ],
                 "summary": "User Login",
-                "operationId": "be2e78e5f93182d4403f839cc516d312",
+                "operationId": "97d0fa1f733dead1980e640104204374",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -164,28 +164,6 @@
                         "description": "Invalid credentials"
                     }
                 }
-            }
-        },
-        "/api/auth/logout": {
-            "post": {
-                "tags": [
-                    "Auth"
-                ],
-                "summary": "User Logout",
-                "operationId": "0b366af9c6842623aab9c8827c519b89",
-                "responses": {
-                    "200": {
-                        "description": "User logged out successfully"
-                    },
-                    "500": {
-                        "description": "Error logging out"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
             }
         },
         "/api/v1/categories": {
@@ -404,26 +382,62 @@
         "schemas": {
             "Category": {
                 "title": "Category",
-                "description": "類別 model",
+                "description": "類別",
                 "properties": {
                     "id": {
-                        "description": "Category ID",
+                        "description": "類別 ID",
                         "type": "integer",
                         "format": "int64"
                     },
                     "category_name": {
-                        "description": "Category name",
+                        "description": "文章類別名稱",
                         "type": "string"
                     },
                     "created_at": {
-                        "description": "Creation date",
+                        "description": "建立時間",
                         "type": "string",
                         "format": "date-time"
                     },
                     "updated_at": {
-                        "description": "Last update date",
+                        "description": "最後修改時間",
                         "type": "string",
                         "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Comment": {
+                "title": "Comment",
+                "description": "文章留言",
+                "properties": {
+                    "id": {
+                        "description": "Comment ID",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "content": {
+                        "description": "留言內容",
+                        "type": "string"
+                    },
+                    "user_id": {
+                        "description": "留言者的 ID",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "post_id": {
+                        "description": "該留言屬於的文章 ID",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "created_at": {
+                        "description": "建立時間",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "最後修改時間",
+                        "type": "string",
+                        "format": "data-time"
                     }
                 },
                 "type": "object"
@@ -436,43 +450,63 @@
                 ],
                 "properties": {
                     "id": {
-                        "description": "Post ID",
+                        "description": "文章 ID",
                         "type": "integer",
                         "format": "int64"
                     },
                     "title": {
-                        "description": "Post title",
+                        "description": "文章標題",
                         "type": "string"
                     },
                     "content": {
-                        "description": "Post content",
+                        "description": "文章內容",
                         "type": "string"
                     },
                     "user_id": {
-                        "description": "關聯之user_id",
+                        "description": "關聯之使用者 ID",
                         "type": "integer"
+                    },
+                    "created_at": {
+                        "description": "建立時間",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "最後修改時間",
+                        "type": "string",
+                        "format": "data-time"
                     }
                 },
                 "type": "object"
             },
             "User": {
                 "title": "User",
-                "description": "User model",
+                "description": "使用者",
                 "properties": {
                     "id": {
-                        "description": "User ID",
+                        "description": "使用者 ID",
                         "type": "integer"
                     },
                     "name": {
-                        "description": "User's name",
+                        "description": "使用者名稱",
                         "type": "string"
                     },
                     "email": {
-                        "description": "User's email address",
+                        "description": "使用者電子郵件",
                         "type": "string"
                     }
                 },
                 "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "description": "請輸入JWT token",
+                "name": "Authorization",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
             }
         }
     }

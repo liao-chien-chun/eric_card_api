@@ -103,7 +103,7 @@ class AuthController extends Controller
 
 /**
  * @OA\Post(
- *     path="/api/auth/login",
+ *     path="/api/v1/auth/login",
  *     summary="User Login",
  *     tags={"Auth"},
  *     @OA\RequestBody(
@@ -161,22 +161,6 @@ class AuthController extends Controller
         ], 200); 
     }
 
-/**
- * @OA\Post(
- *     path="/api/auth/logout",
- *     summary="User Logout",
- *     tags={"Auth"},
- *     security={{"bearerAuth":{}}},
- *     @OA\Response(
- *         response=200,
- *         description="User logged out successfully"
- *     ),
- *     @OA\Response(
- *         response=500,
- *         description="Error logging out"
- *     )
- * )
- */
 
     // 登出
     public function logout(Request $request)

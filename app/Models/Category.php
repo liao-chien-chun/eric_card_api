@@ -15,29 +15,29 @@ class Category extends Model
      *      schema="Category",
      *      type="object",
      *      title="Category",
-     *      description="類別 model",
+     *      description="類別",
      *      @OA\Property(
     *           property="id",
     *           type="integer",
     *           format="int64",
-    *           description="Category ID"
+    *           description="類別 ID"
     *       ),
     *       @OA\Property(
     *           property="category_name",
     *           type="string",
-    *           description="Category name"
+    *           description="文章類別名稱"
     *       ),
     *       @OA\Property(
     *           property="created_at",
     *           type="string",
     *           format="date-time",
-    *           description="Creation date"
+    *           description="建立時間"
     *       ),
     *       @OA\Property(
     *           property="updated_at",
     *           type="string",
     *           format="date-time",
-    *           description="Last update date"
+    *           description="最後修改時間"
     *       )
      * )
      * 
