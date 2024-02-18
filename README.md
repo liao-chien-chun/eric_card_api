@@ -181,10 +181,11 @@ php artisan serve
 }
 ```
 
--   500 Internal Server Error
+- 500 Internal Server Error 
 
 ```json
 {
+    
     'success' => false,
     'status' => 500,
     'message' => '無法建立token',
@@ -210,9 +211,69 @@ php artisan serve
 
 ```json
 {
-    "message": "Unauthenticated."
+    "success": false,
+    "status": 401,
+    "message": "未經授權"
 }
 ```
+### 4. 取得當入使用者收藏之文章：GET api/v1/user/collected-posts
+-   Parameters：No
+-   Request Body：NO
+-   Response
+-   200 OK
+```json
+{
+    "success": true,
+    "status": 200,
+    "message": "成功取得使用者收藏之文章",
+    "data": [
+        {
+            "id": 1,
+            "title": "測試文章1",
+            "content": "這是一篇這是文章內容1",
+            "user_id": 2,
+            "category_id": 1,
+            "created_at": "2024-02-14 23:10:52",
+            "updated_at": "2024-02-14 23:10:52",
+            "user": {
+                "id": 2,
+                "name": "eric"
+            },
+            "category": {
+                "id": 1,
+                "category_name": "科技"
+            }
+        },
+        {
+            "id": 2,
+            "title": "測試文章2",
+            "content": "這是一篇這是文章內容2",
+            "user_id": 2,
+            "category_id": 1,
+            "created_at": "2024-02-14 23:19:52",
+            "updated_at": "2024-02-14 23:19:52",
+            "user": {
+                "id": 2,
+                "name": "eric"
+            },
+            "category": {
+                "id": 1,
+                "category_name": "科技"
+            }
+        }
+    ]
+}
+```
+- 401 Unauthorized
+```json
+{
+    "success": false,
+    "status": 401,
+    "message": "未經授權"
+}
+```
+
+
 
 ### Category (類別) API
 
@@ -641,7 +702,9 @@ php artisan serve
 -   401 Unauthorized
 ```json
 {
-    "message": "Unauthenticated."
+    "success": false,
+    "status": 401,
+    "message": "未經授權"
 }
 ```
 -   404 Not Found
@@ -687,7 +750,9 @@ php artisan serve
 -   401 Unauthorized
 ```json
 {
-    "message": "Unauthenticated."
+    "success": false,
+    "status": 401,
+    "message": "未經授權"
 }
 ```
 
@@ -708,5 +773,71 @@ php artisan serve
     "success": false,
     "status": 403,
     "message": "不得刪除他人留言"
+}
+```
+### 7. 收藏/取消收藏文章：POST api/v1/posts/:post_id/toggle-collection
+-   Parameters：
+
+| Params     | Required | Type | Description   |
+| ---------- | -------- | ---- | ------------- |
+| post_id    | Required | int  | post 的 id    |
+
+-   Request Body : No
+-   Response
+-   200 OK
+```json
+{
+    "success": true,
+    "status": 200,
+    "message": "收藏成功"
+}
+```
+- 200 OK
+```json
+{
+    "success": true,
+    "status": 200,
+    "message": "取消收藏成功"
+}
+```
+- 401 Unauthorized
+```json
+{
+    "success": false,
+    "status": 401,
+    "message": "未經授權"
+}
+```
+### 8. 對文章 按愛心/取消按愛心：POST api/v1/posts/post_id/toggle-like
+-   Parameters：
+
+| Params     | Required | Type | Description   |
+| ---------- | -------- | ---- | ------------- |
+| post_id    | Required | int  | post 的 id    |
+
+-   Request Body : No
+-   Response
+-   200 OK
+```json
+{
+    "success": true,
+    "status": 200,
+    "message": "按愛心成功"
+}
+```
+- 200 OK
+```json
+{
+    "success": true,
+    "status": 200,
+    "message": "愛心取消成功"
+}
+```
+- 401 Unauthorized
+```json
+{
+    "success": false,
+    "status": 401,
+    "message": "未經授權"
 }
 ```
