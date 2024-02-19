@@ -35,6 +35,107 @@ class CommentController extends Controller
         ], 200);
     }
 
+    /**
+     * @OA\Post(
+     *      path="/api/v1/posts/{post_id}/comments",
+     *      summary="對文章留言",
+     *      tags={"Posts"},
+     *      @OA\Parameter(
+     *          name="post_id",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=201,
+     *          description="留言成功",
+     *          @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(
+     *                  property="success",
+     *                  type="boolean",
+     *                  example=true
+     *              ),
+     *              @OA\Property(
+    *                   property="status",
+    *                   type="integer",
+    *                   example=201
+    *               ),
+    *               @OA\Property(
+    *                   property="message",
+    *                   type="string",
+    *                   example="留言成功"
+    *               ),
+    *               @OA\Property(
+    *                   property="data",
+    *                   ref="#/components/schemas/Comment"
+    *               )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="bad request",
+     *          @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(
+     *                  property="success",
+    *                   type="boolean",
+    *                   example=false
+     *              ),
+     *              @OA\Property(
+     *                  property="status",
+    *                   type="integer",
+    *                   example=400
+     *              ),
+     *              @OA\Property(
+     *                  property="message",
+    *                   type="string",
+    *                   example="請求參數錯誤"
+     *              ),
+     *              @OA\Property(
+     *                  property="errors",
+    *                   type="object",
+    *                   @OA\Property(
+    *                       property="content",
+    *                       type="array",
+    *                       @OA\Items(
+    *                           type="string",
+    *                           example="留言內容不得為空"        
+    *                       )
+     *                  )
+     *              ),
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="伺服器錯誤",
+     *          @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(
+     *                  property="success",
+     *                  type="boolean",
+     *                  example=false
+     *              ),
+     *              @OA\Property(
+     *                  property="status",
+     *                  type="integer",
+     *                  example=500
+     *              ),
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  example="伺服器錯誤，請稍後再試"
+     *              ),
+     *          )
+     *      ),
+     * 
+     *      security={{ "bearerAuth": {} }}
+     * )
+     */
+
+
     // 新增留言
     public function store(Request $request, $post_id)
     {

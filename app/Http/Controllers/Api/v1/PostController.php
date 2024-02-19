@@ -14,7 +14,7 @@ class PostController extends Controller
     /**
      * @OA\Get(
      *     path="/api/v1/posts",
-     *     summary="展示所有文章",
+     *     summary="取得所有文章",
      *     tags={"Posts"},
      *     @OA\Response(
      *         response=200,
@@ -29,7 +29,7 @@ class PostController extends Controller
      *             @OA\Property(
      *                 property="status",
      *                 type="integer",
-     *                 example=201
+     *                 example=200
      *             ),
      *             @OA\Property(
      *                 property="message",
@@ -202,23 +202,86 @@ class PostController extends Controller
  *     security={{"bearerAuth":{}}},
  *     @OA\RequestBody(
  *         @OA\JsonContent(
- *             required={"title","content"},
+ *             required={"title","content", "category_id"},
  *             @OA\Property(property="title", type="string", example="範例標題"),
- *             @OA\Property(property="content", type="string", example="這是文章內容")
+ *             @OA\Property(property="content", type="string", example="這是文章內容"),
+ *             @OA\Property(
+ *                 property="category_id",
+ *                 type="integer",
+ *                 example=1  
+ *             ),
  *         )
  *     ),
  *     @OA\Response(
  *         response=201,
  *         description="文章發布成功",
- *         @OA\JsonContent(ref="#/components/schemas/Post")
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(
+ *                  property="success",
+ *                  type="boolean",
+ *                  example=true,
+ *             ),
+ *             @OA\Property(
+ *                  property="status",
+ *                  type="integer",
+ *                  example=201
+ *             ),
+ *             @OA\Property(
+ *                  property="message",
+ *                  type="string",
+ *                  example="文章發布成功"
+ *             ),
+ *             @OA\Property(
+ *                  property="data",
+ *                  type="array",
+ *                  @OA\Items(ref="#/components/schemas/Post")
+ *             ),
+ *         ),
  *     ),
  *     @OA\Response(
  *         response=400,
- *         description="請求參數錯誤"
+ *         description="請求參數錯誤",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(
+ *                  property="success",
+ *                  type="boolean",
+ *                  example=false,
+ *             ),
+ *             @OA\Property(
+ *                  property="status",
+ *                  type="integer",
+ *                  example=400,
+ *             ),
+ *             @OA\Property(
+ *                  property="message",
+ *                  type="string",
+ *                  example="請求參數錯誤",
+ *             ),
+ *         )
  *     ),
  *     @OA\Response(
  *         response=500,
- *         description="伺服器錯誤，請稍後再試"
+ *         description="伺服器錯誤，請稍後再試",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(
+ *                  property="success",
+ *                  type="boolean",
+ *                  example=false,
+ *             ),
+ *             @OA\Property(
+ *                  property="status",
+ *                  type="integer",
+ *                  example=500,
+ *             ),
+ *             @OA\Property(
+ *                  property="message",
+ *                  type="string",
+ *                  example="伺服器錯誤，請稍後再試",
+ *             ),
+ *         )
  *     ),
  *     security={{ "bearerAuth": {} }}
  * )

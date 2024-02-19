@@ -275,12 +275,125 @@
                 }
             }
         },
+        "/api/v1/posts/{post_id}/comments": {
+            "post": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "對文章留言",
+                "operationId": "3f440cc6f70f49e8e7f9688839a2b3fc",
+                "parameters": [
+                    {
+                        "name": "post_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "留言成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 201
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "留言成功"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Comment"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 400
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "請求參數錯誤"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "content": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "留言內容不得為空"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "伺服器錯誤",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "伺服器錯誤，請稍後再試"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/posts": {
             "get": {
                 "tags": [
                     "Posts"
                 ],
-                "summary": "展示所有文章",
+                "summary": "取得所有文章",
                 "operationId": "74f5938736730f550751f0d7c8816511",
                 "responses": {
                     "200": {
@@ -295,7 +408,7 @@
                                         },
                                         "status": {
                                             "type": "integer",
-                                            "example": 201
+                                            "example": 200
                                         },
                                         "message": {
                                             "type": "string",
@@ -327,7 +440,8 @@
                             "schema": {
                                 "required": [
                                     "title",
-                                    "content"
+                                    "content",
+                                    "category_id"
                                 ],
                                 "properties": {
                                     "title": {
@@ -337,6 +451,10 @@
                                     "content": {
                                         "type": "string",
                                         "example": "這是文章內容"
+                                    },
+                                    "category_id": {
+                                        "type": "integer",
+                                        "example": 1
                                     }
                                 },
                                 "type": "object"
@@ -350,16 +468,78 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Post"
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 201
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "文章發布成功"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Post"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
                     },
                     "400": {
-                        "description": "請求參數錯誤"
+                        "description": "請求參數錯誤",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 400
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "請求參數錯誤"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "500": {
-                        "description": "伺服器錯誤，請稍後再試"
+                        "description": "伺服器錯誤，請稍後再試",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "伺服器錯誤，請稍後再試"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -506,6 +686,25 @@
                 },
                 "type": "object"
             },
+            "User": {
+                "title": "User",
+                "description": "使用者",
+                "properties": {
+                    "id": {
+                        "description": "使用者 ID",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "使用者名稱",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "使用者電子郵件",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "Post": {
                 "title": "Post",
                 "required": [
@@ -530,6 +729,10 @@
                         "description": "關聯之使用者 ID",
                         "type": "integer"
                     },
+                    "category_id": {
+                        "description": "關聯之分類 ID",
+                        "type": "integer"
+                    },
                     "created_at": {
                         "description": "建立時間",
                         "type": "string",
@@ -538,26 +741,7 @@
                     "updated_at": {
                         "description": "最後修改時間",
                         "type": "string",
-                        "format": "data-time"
-                    }
-                },
-                "type": "object"
-            },
-            "User": {
-                "title": "User",
-                "description": "使用者",
-                "properties": {
-                    "id": {
-                        "description": "使用者 ID",
-                        "type": "integer"
-                    },
-                    "name": {
-                        "description": "使用者名稱",
-                        "type": "string"
-                    },
-                    "email": {
-                        "description": "使用者電子郵件",
-                        "type": "string"
+                        "format": "date-time"
                     }
                 },
                 "type": "object"
