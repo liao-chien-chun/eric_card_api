@@ -220,7 +220,7 @@ class PostController extends Controller
  *         response=500,
  *         description="伺服器錯誤，請稍後再試"
  *     ),
- *     security={{ "apiAuth": {} }}
+ *     security={{ "bearerAuth": {} }}
  * )
  */
 

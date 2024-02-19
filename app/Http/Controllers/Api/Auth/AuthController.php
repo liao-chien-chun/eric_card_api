@@ -161,6 +161,56 @@ class AuthController extends Controller
         ], 200); 
     }
 
+    /**
+     * @OA\Post(
+     *      path="/api/v1/auth/logout",
+     *      summary="使用者登出",
+     *      tags={"Auth"},
+     *      @OA\Response(
+     *          response=200,
+     *          description="成功登出",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="success", 
+     *                  type="boolean",
+     *                  example=true
+     *              ),
+     *              @OA\Property(
+     *                  property="status", 
+     *                  type="integer",
+     *                  example=200
+     *              ),
+     *              @OA\Property(
+     *                  property="message", 
+     *                  type="string",
+     *                  example="成功登出"
+     *              ),
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="伺服器異常",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="success",
+     *                  type="boolean",
+     *                  example="false"
+     *              ),
+     *              @OA\Property(
+     *                  property="status",
+     *                  type="integer",
+     *                  example=500
+     *              ),
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  example="登出時發生錯誤"
+     *              ),
+     *          )
+     *      ),
+     *      security={{ "bearerAuth": {} }}
+     * )
+     */
 
     // 登出
     public function logout(Request $request)
